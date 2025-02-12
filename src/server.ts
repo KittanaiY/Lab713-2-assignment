@@ -57,5 +57,12 @@ const library: Library[] = [
 ]
 
 app.get("/library", (req,res)=> {
-    res.json(library);
+    const title = req.query.title as string;
+    if (title) {
+        const filteredLibrary = library.filter((book) => book.title.includes(title));
+        res.json(filteredLibrary);
+    } else{
+        res.json(library);
+    }
 });
+
