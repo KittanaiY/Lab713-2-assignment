@@ -2,6 +2,8 @@ import express, {Request, Response} from 'express'
 const app = express()
 const port = 3000
 
+app.use(express.json());
+
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World!')
 })
@@ -63,15 +65,15 @@ const library: Library[] = [
     }
 ]
 
-// app.get("/library", (req,res)=> {
-//     const title = req.query.title as string;
-//     if (title) {
-//         const filteredLibrary = library.filter((book) => book.title.includes(title));
-//         res.json(filteredLibrary);
-//     } else{
-//         res.json(library);
-//     }
-// });
+app.get("/library", (req,res)=> {
+    const title = req.query.title as string;
+    if (title) {
+        const filteredLibrary = library.filter((book) => book.title.includes(title));
+        res.json(filteredLibrary);
+    } else{
+        res.json(library);
+    }
+});
 
 app.get("/library/:id", (req,res)=>{
     const id = parseInt(req.params.id);
@@ -83,3 +85,10 @@ app.get("/library/:id", (req,res)=>{
     }
 
 })
+
+app.post("/library", (req, res) => {
+    const newBook: Library = req.body;
+    newBook.id = library.length + 1;
+    library.push(newBook);
+    res.json(newBook);
+});
