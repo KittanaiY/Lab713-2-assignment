@@ -1,20 +1,20 @@
-export function getBookByGroup(group:string): Library[] {
+export function getBookByGroup(group:string): Promise<Library[]> {
     const filteredBooks = library.filter((book) => book.groups.includes(group));
-    return filteredBooks;
+    return Promise.resolve(filteredBooks);
 }
 
-export function getAllBooks():Library[] {
-    return library;
+export function getAllBooks():Promise<Library[]> {
+    return Promise.resolve(library);
 }
 
 export function getBookById(id:number): Library | undefined {
     return library.find((book) => book.id === id);
 }
 
-export function addBook(newBook: Library): Library{
+export function addBook(newBook: Library): Promise<Library>{
     newBook.id = library.length + 1;
     library.push(newBook);
-    return newBook;
+    return Promise.resolve(newBook);
 }
 
 export interface Library {

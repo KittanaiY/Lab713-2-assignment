@@ -16,19 +16,19 @@ app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
 })
 
-app.get("/library", (req,res)=> {
+app.get("/library", async(req,res)=> {
     if (req.query.groups) {
         const groups = req.query.groups as string;
-        const filteredBook = getBookByGroup(groups);
+        const filteredBook = await getBookByGroup(groups);
         res.json(filteredBook);
     } else{
-        res.json(getAllBooks);
+        res.json(await getAllBooks());
     }
 });
 
-app.get("/library/:id", (req,res)=>{
+app.get("/library/:id", async(req,res)=>{
     const id = parseInt(req.params.id);
-    const book = getBookById(id);
+    const book = await getBookById(id);
     if(book){
         res.json(book);
     } else{
@@ -37,8 +37,8 @@ app.get("/library/:id", (req,res)=>{
 
 })
 
-app.post("/library", (req, res) => {
+app.post("/library", async(req, res) => {
     const newBook: Library = req.body;
-    addBook(newBook);
+    await addBook(newBook);
     res.json(newBook);
 });
