@@ -4,8 +4,29 @@ const port = 3000
 
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!')
+function getBookByGroup(group:string): Library[] {
+    const filteredBooks = library.filter((book) => book.groups.includes(group));
+    return filteredBooks;
+}
+
+function getAllBooks():Library[] {
+    return library;
+}
+
+function getBookById(id:number): Library | undefined {
+    return library.find((book) => book.id === id);
+}
+
+function addBook(newBook: Library): Library{
+    newBook.id = library.length + 1;
+    library.push(newBook);
+    return newBook;
+}
+
+app.get('/test', (req: Request, res: Response) => {
+    const id = req.query.id;
+    const output = `id: ${id}`;
+    res.send(output);
 })
 
 app.listen(port, () => {
@@ -66,18 +87,18 @@ const library: Library[] = [
 ]
 
 app.get("/library", (req,res)=> {
-    const title = req.query.title as string;
-    if (title) {
-        const filteredLibrary = library.filter((book) => book.title.includes(title));
-        res.json(filteredLibrary);
+    if (req.query.groups) {
+        const groups = req.query.groups;
+        const filteredBook = getBookByGroup(groups as string);
+        res.json(filteredBook);
     } else{
-        res.json(library);
+        res.json(getAllBooks);
     }
 });
 
 app.get("/library/:id", (req,res)=>{
     const id = parseInt(req.params.id);
-    const book = library.find((book)=> book.id === id);
+    const book = getBookById(id);
     if(book){
         res.json(book);
     } else{
@@ -88,7 +109,6 @@ app.get("/library/:id", (req,res)=>{
 
 app.post("/library", (req, res) => {
     const newBook: Library = req.body;
-    newBook.id = library.length + 1;
-    library.push(newBook);
+    addBook(newBook);
     res.json(newBook);
 });
