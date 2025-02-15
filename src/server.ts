@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express'
-import {Library, getAllBooks, getBookByGroup, getBookById, addBook} from './services/BookService'
+import { getAllBooks, getBookByGroup, getBookById, addBook} from './services/BookService'
+import type { Library } from './model/Library'
 
 const app = express()
 const port = 3000
