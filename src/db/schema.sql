@@ -12,3 +12,4 @@ CREATE TABLE IF NOT EXISTS `Library` (
     description TEXT NOT NULL,
     genre VARCHAR(255) NOT NULL
 );
+
