@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "express": "^4.21.2",
-    "lab713-2-assignment": "file:"
+    "lab713-2-assignment": "file:",
+    "mysql2": "^3.12.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

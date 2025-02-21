@@ -1,19 +1,20 @@
 import type{ Library } from '../model/Library';
+import connection from '../db';    
 
-export function getBookByGroup(group:string): Promise<Library[]> {
+export async function getBookByGroup(group:string): Promise<Library[]> {
     const filteredBooks = library.filter((book) => book.genre === group);
     return Promise.resolve(filteredBooks);
 }
 
-export function getAllBooks():Promise<Library[]> {
+export async function getAllBooks():Promise<Library[]> {
     return Promise.resolve(library);
 }
 
-export function getBookById(id:number): Library | undefined {
+export async function getBookById(id:number): Library | undefined {
     return library.find((book) => book.id === id);
 }
 
-export function addBook(newBook: Library): Promise<Library>{
+export async function addBook(newBook: Library): Promise<Library>{
     newBook.id = library.length + 1;
     library.push(newBook);
     return Promise.resolve(newBook);

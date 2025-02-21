@@ -18,9 +18,9 @@ app.listen(port, () => {
 })
 
 app.get("/library", async(req,res)=> {
-    if (req.query.groups) {
-        const groups = req.query.groups as string;
-        const filteredBook = await getBookByGroup(groups);
+    if (req.query.genre) {
+        const genre = req.query.genre as string;
+        const filteredBook = await getBookByGroup(genre);
         res.json(filteredBook);
     } else{
         res.json(await getAllBooks());
